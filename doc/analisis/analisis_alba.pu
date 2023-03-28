@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+actor Aplicación
+rectangle Calculadora{
+    
+    usecase Sumar
+    usecase Restar
+    usecase Multiplicar
+    usecase Dividir
+    usecase ConsultarHistorial
+    usecase "Enteros" as se
+    usecase "Reales" as sr
+
+    Aplicación -- Sumar
+    Aplicación -- Restar
+    Aplicación -- Multiplicar
+    Aplicación -- Dividir
+    Aplicación -- ConsultarHistorial
+    
+
+    Sumar <|-- se
+    Sumar <|-- sr
+
+@enduml
