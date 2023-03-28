@@ -6,8 +6,11 @@ left to right direction
 
 [IOUtilidades]
 
+[Historial]
+
 [Aplicación] ..> [IOUtilidades]:use
 [Aplicación] ..> [Calculadora]:use
+[Aplicación] ..> [Historial]:use
 
 note right of [Aplicación]
     Aplicación que pide los operandos 
@@ -35,35 +38,52 @@ package es.dam.prog.calculadora {
     abstract class Operando
 
     class EnteroOperandos{
-        -operador1:int
-        -operador2:int
+        -operando1:int
+        -operando2:int
 
     }
     class RealOperandos{
-        -operador1:double
-        -operador2:double
+        -operando1:double
+        -operando2:double
 
     }
     Operando <|-- EnteroOperandos
     Operando <|-- RealOperandos
 
-    interface Operacion{
+    interface Operable{
         +double calcular(operandos: RealOperandos)
         +int calcular(operandos: EnteroOperandos)
     }
 
-    class Suma
-    class Division
+    class Suma{
 
-    Operacion <|.. Suma
-    Operacion <|.. Division
+    }
 
-    class CalculadoraException
+    class Resta{
 
-    Operacion ..> CalculadoraException: throws
+    }
+
+    class Multiplicacion{
+
+    }
+
+    class Division{
+
+    }
+
+    Operable <|.. Suma
+    Operable <|.. Resta
+    Operable <|.. Multiplicacion
+    Operable <|.. Division
+
+    class CalculadoraException {
+
+    }
+
+    Operable ..> CalculadoraException: throws
 
 
-    note right of Operacion
+    note right of Operable
         Todas las opciones de cálculo
         son recogidas en esta interfaz:
         suma, resta, división... Si quiero
@@ -77,12 +97,45 @@ package es.dam.prog.calculadora {
         cambiaremos esta clase para que sea más
         potente y flexible.
     end note
+
 }
-note right of es.dam.prog.calculadora 
+
+note bottom of es.dam.prog.calculadora 
     Este paquete contiene todos los artefactos
     de programación del módulo/componente
     calculadora            
 end note
+
+package es.dam.prog.historial {
+
+    class Historial {
+
+        -add(Operacion)
+        -add(Operando, char)
+        -remove()
+        -list(): String[]
+
+    }
+    
+    class Operacion {
+        +operando1
+        +operando2
+        +operador
+
+    }
+
+    Historial *-- Operacion
+
+
+}
+
+class ArrayList{
+
+}
+
+Historial ..> ArrayList:use
+
+
 @enduml
 
 @startuml segundoNivelIOUtilidades
